@@ -33,11 +33,9 @@
     overflow-x: hidden;
   }
 
-  /* Starfield background */
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image:
       radial-gradient(1px 1px at 10% 20%, rgba(200,216,240,0.6) 0%, transparent 100%),
       radial-gradient(1px 1px at 30% 60%, rgba(200,216,240,0.4) 0%, transparent 100%),
@@ -49,44 +47,32 @@
       radial-gradient(1px 1px at 90% 15%, rgba(200,216,240,0.6) 0%, transparent 100%),
       radial-gradient(2px 2px at 45% 70%, rgba(240,165,0,0.4) 0%, transparent 100%),
       radial-gradient(2px 2px at 75% 30%, rgba(58,123,213,0.5) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
 
-  /* Nebula gradient */
   body::after {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background:
       radial-gradient(ellipse 60% 40% at 20% 30%, rgba(58,123,213,0.07) 0%, transparent 70%),
       radial-gradient(ellipse 50% 60% at 80% 70%, rgba(0,201,255,0.05) 0%, transparent 70%),
       radial-gradient(ellipse 40% 50% at 50% 50%, rgba(240,165,0,0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
 
   .wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 780px;
-    margin: 0 auto;
+    position: relative; z-index: 1;
+    max-width: 780px; margin: 0 auto;
     padding: 40px 20px 80px;
   }
 
-  /* Header */
-  header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
+  header { text-align: center; margin-bottom: 48px; }
 
   .header-rune {
-    font-size: 42px;
-    margin-bottom: 8px;
+    font-size: 42px; margin-bottom: 8px;
     filter: drop-shadow(0 0 12px var(--gold));
     animation: pulse-rune 3s ease-in-out infinite;
   }
-
   @keyframes pulse-rune {
     0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px var(--gold)); }
     50% { transform: scale(1.08); filter: drop-shadow(0 0 22px var(--gold2)); }
@@ -95,561 +81,253 @@
   h1 {
     font-family: 'Cinzel Decorative', serif;
     font-size: clamp(18px, 4vw, 28px);
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-weight: 700; letter-spacing: 0.12em;
     color: var(--gold2);
     text-shadow: 0 0 30px rgba(240,165,0,0.5), 0 0 60px rgba(240,165,0,0.2);
     margin-bottom: 10px;
   }
 
-  .subtitle {
-    font-size: 14px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+  .subtitle { font-size: 14px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
 
-  /* Divider */
   .divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 0 auto 36px;
-    max-width: 420px;
+    display: flex; align-items: center; gap: 16px;
+    margin: 0 auto 36px; max-width: 420px;
   }
   .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
+    content: ''; flex: 1; height: 1px;
     background: linear-gradient(90deg, transparent, var(--border), transparent);
   }
   .divider-gem {
-    width: 8px; height: 8px;
-    background: var(--gold);
-    transform: rotate(45deg);
-    box-shadow: 0 0 10px var(--gold);
-    flex-shrink: 0;
+    width: 8px; height: 8px; background: var(--gold);
+    transform: rotate(45deg); box-shadow: 0 0 10px var(--gold); flex-shrink: 0;
   }
 
-  /* Upload panel */
   .upload-panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
-    margin-bottom: 32px;
-    position: relative;
-    overflow: hidden;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px; margin-bottom: 32px;
+    position: relative; overflow: hidden;
   }
-
   .upload-panel::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
     background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), var(--accent), transparent);
     opacity: 0.7;
   }
 
   .section-label {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 16px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--accent2); margin-bottom: 16px;
   }
 
   .drop-zone {
-    border: 2px dashed var(--border);
-    border-radius: 12px;
-    padding: 48px 24px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
+    border: 2px dashed var(--border); border-radius: 12px;
+    padding: 48px 24px; text-align: center; cursor: pointer;
+    transition: all 0.3s ease; position: relative;
     background: rgba(58,123,213,0.03);
   }
-
   .drop-zone:hover, .drop-zone.drag-over {
-    border-color: var(--accent);
-    background: rgba(58,123,213,0.08);
-    box-shadow: var(--glow);
+    border-color: var(--accent); background: rgba(58,123,213,0.08); box-shadow: var(--glow);
   }
-
-  .drop-zone input[type=file] {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-  }
-
+  .drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
   .drop-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.7; }
   .drop-text { font-size: 16px; color: var(--text); margin-bottom: 6px; font-weight: 500; }
   .drop-hint { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
 
   .paste-hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--accent2);
-    background: rgba(0,201,255,0.08);
-    border: 1px solid rgba(0,201,255,0.2);
-    border-radius: 20px;
-    padding: 4px 12px;
-    letter-spacing: 0.1em;
-    margin-top: 4px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--accent2);
+    background: rgba(0,201,255,0.08); border: 1px solid rgba(0,201,255,0.2);
+    border-radius: 20px; padding: 4px 12px; letter-spacing: 0.1em; margin-top: 4px;
   }
-
   .paste-hint kbd {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-family: monospace;
-    font-size: 11px;
-    color: #fff;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px; padding: 1px 6px; font-family: monospace; font-size: 11px; color: #fff;
   }
 
-  /* Paste flash animation */
   @keyframes paste-flash {
     0% { border-color: var(--accent2); box-shadow: 0 0 0 0 rgba(0,201,255,0.5); }
     50% { border-color: var(--accent2); box-shadow: 0 0 0 8px rgba(0,201,255,0); }
     100% { border-color: var(--border); box-shadow: none; }
   }
-  .drop-zone.paste-flash {
-    animation: paste-flash 0.6s ease-out;
-  }
+  .drop-zone.paste-flash { animation: paste-flash 0.6s ease-out; }
 
-  /* OCR method badge */
   .method-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 10px;
-    margin-left: 10px;
-    vertical-align: middle;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 10px; margin-left: 10px; vertical-align: middle;
   }
-  .method-badge.ocr {
-    background: rgba(0,255,179,0.1);
-    border: 1px solid rgba(0,255,179,0.3);
-    color: var(--success);
-  }
-  .method-badge.ai {
-    background: rgba(58,123,213,0.1);
-    border: 1px solid rgba(58,123,213,0.3);
-    color: var(--accent2);
-  }
-  .method-badge.manual {
-    background: rgba(240,165,0,0.1);
-    border: 1px solid rgba(240,165,0,0.3);
-    color: var(--gold);
-  }
+  .method-badge.ocr    { background: rgba(0,255,179,0.1);  border: 1px solid rgba(0,255,179,0.3);  color: var(--success); }
+  .method-badge.manual { background: rgba(240,165,0,0.1);  border: 1px solid rgba(240,165,0,0.3);  color: var(--gold); }
 
-  /* Preview */
   #preview-wrap {
-    display: none;
-    margin-top: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    position: relative;
+    display: none; margin-top: 20px; border-radius: 10px;
+    overflow: hidden; border: 1px solid var(--border); position: relative;
   }
-
-  #preview-img {
-    width: 100%;
-    max-height: 240px;
-    object-fit: contain;
-    background: #000;
-    display: block;
-  }
-
+  #preview-img { width: 100%; max-height: 240px; object-fit: contain; background: #000; display: block; }
   .preview-clear {
-    position: absolute;
-    top: 8px; right: 8px;
-    background: rgba(0,0,0,0.7);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 50%;
-    width: 28px; height: 28px;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(0,0,0,0.7); border: 1px solid var(--border); color: var(--text);
+    border-radius: 50%; width: 28px; height: 28px; font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
   }
   .preview-clear:hover { background: var(--danger); border-color: var(--danger); }
 
-  /* Manual input */
-  .manual-section {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-
+  .manual-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
   .or-divider {
-    text-align: center;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    margin-bottom: 16px;
-    text-transform: uppercase;
+    text-align: center; font-size: 12px; letter-spacing: 0.2em;
+    color: var(--muted); margin-bottom: 16px; text-transform: uppercase;
   }
-
-  .time-input-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
+  .time-input-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .time-input-group {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 14px;
-    flex: 1;
-    min-width: 200px;
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 14px; flex: 1; min-width: 200px;
   }
-
-  .time-input-group label {
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    white-space: nowrap;
-    text-transform: uppercase;
-  }
-
-  .time-parts {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
+  .time-input-group label { font-size: 12px; letter-spacing: 0.15em; color: var(--muted); white-space: nowrap; text-transform: uppercase; }
+  .time-parts { display: flex; align-items: center; gap: 4px; }
   .time-parts input {
-    background: transparent;
-    border: none;
-    color: var(--gold2);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    width: 42px;
-    text-align: center;
-    outline: none;
+    background: transparent; border: none; color: var(--gold2);
+    font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700;
+    width: 42px; text-align: center; outline: none;
   }
-
   .time-parts input::-webkit-inner-spin-button,
   .time-parts input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .time-sep { color: var(--gold); font-size: 20px; font-weight: 700; }
 
-  .time-sep {
-    color: var(--gold);
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  /* Analyze button */
   .btn-analyze {
-    display: block;
-    width: 100%;
-    margin-top: 24px;
-    padding: 16px;
+    display: block; width: 100%; margin-top: 24px; padding: 16px;
     background: linear-gradient(135deg, #1a3a6e, #1e4a8a);
-    border: 1px solid var(--accent);
-    border-radius: 10px;
-    color: var(--accent2);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    border: 1px solid var(--accent); border-radius: 10px; color: var(--accent2);
+    font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
   }
-
   .btn-analyze::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+    content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(58,123,213,0.2), rgba(0,201,255,0.1));
-    opacity: 0;
-    transition: opacity 0.3s;
+    opacity: 0; transition: opacity 0.3s;
   }
-
   .btn-analyze:hover::before { opacity: 1; }
   .btn-analyze:hover { box-shadow: 0 0 24px rgba(58,123,213,0.5); transform: translateY(-1px); }
   .btn-analyze:active { transform: translateY(0); }
   .btn-analyze:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-  /* Processing state */
   .processing-indicator {
-    display: none;
-    text-align: center;
-    padding: 32px;
-    color: var(--accent2);
-    font-size: 14px;
-    letter-spacing: 0.2em;
+    display: none; text-align: center; padding: 32px;
+    color: var(--accent2); font-size: 14px; letter-spacing: 0.2em;
+  }
+  .spin-rune { font-size: 32px; display: block; margin-bottom: 12px; animation: spin-slow 2s linear infinite; }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+  .error-msg {
+    display: none; background: rgba(255,77,109,0.1);
+    border: 1px solid rgba(255,77,109,0.3); border-radius: 10px;
+    padding: 16px 20px; color: var(--danger); font-size: 14px;
+    letter-spacing: 0.05em; margin-top: 16px;
   }
 
-  .spin-rune {
-    font-size: 32px;
-    display: block;
-    margin-bottom: 12px;
-    animation: spin-slow 2s linear infinite;
-  }
-
-  @keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  /* Results panel */
+  /* Results */
   #results {
-    display: none;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    animation: reveal 0.5s ease;
+    display: none; background: var(--panel); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden; animation: reveal 0.5s ease;
   }
-
-  @keyframes reveal {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
   .result-header {
     padding: 20px 28px;
     background: linear-gradient(135deg, rgba(58,123,213,0.12), rgba(0,201,255,0.05));
-    border-bottom: 1px solid var(--border);
-    position: relative;
+    border-bottom: 1px solid var(--border); position: relative;
   }
-
   .result-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 1px;
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
   }
+  .detected-age { font-size: 13px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  .detected-time { font-size: 36px; font-weight: 700; color: var(--gold2); text-shadow: 0 0 20px rgba(240,165,0,0.4); letter-spacing: 0.05em; }
 
-  .detected-age {
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
+  .next-event-section { padding: 28px; }
 
-  .detected-time {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--gold2);
-    text-shadow: 0 0 20px rgba(240,165,0,0.4);
-    letter-spacing: 0.05em;
-  }
+  .next-label { font-size: 11px; letter-spacing: 0.3em; color: var(--accent2); text-transform: uppercase; margin-bottom: 14px; }
 
-  .next-event-section {
-    padding: 28px;
-  }
-
-  .next-label {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--accent2);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
+  /* Urgency-colored next event card */
   .next-event-card {
-    background: linear-gradient(135deg, rgba(240,165,0,0.08), rgba(240,165,0,0.02));
-    border: 1px solid rgba(240,165,0,0.3);
-    border-radius: 12px;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
+    border-radius: 12px; padding: 20px 24px;
+    display: flex; align-items: center; gap: 20px;
+    margin-bottom: 20px; position: relative; overflow: hidden;
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .next-event-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    opacity: 0.6;
   }
 
-  .next-event-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(240,165,0,0.5), transparent);
+  /* soon = green (≤ 3 min) */
+  .next-event-card.urgency-soon {
+    background: linear-gradient(135deg, rgba(0,220,120,0.12), rgba(0,220,120,0.04));
+    border: 1px solid rgba(0,220,120,0.4);
   }
+  .next-event-card.urgency-soon::before { background: linear-gradient(90deg, transparent, rgba(0,220,120,0.5), transparent); }
+  .urgency-soon .event-timestamp { color: #00ffb3; text-shadow: 0 0 15px rgba(0,255,179,0.5); }
+  .urgency-soon .event-countdown  { color: #00ffb3; }
+
+  /* mid = yellow (3–10 min) */
+  .next-event-card.urgency-mid {
+    background: linear-gradient(135deg, rgba(240,180,0,0.10), rgba(240,180,0,0.03));
+    border: 1px solid rgba(240,180,0,0.38);
+  }
+  .next-event-card.urgency-mid::before { background: linear-gradient(90deg, transparent, rgba(240,180,0,0.5), transparent); }
+  .urgency-mid .event-timestamp { color: var(--gold2); text-shadow: 0 0 15px rgba(240,165,0,0.5); }
+  .urgency-mid .event-countdown  { color: var(--gold2); }
+
+  /* far = red (> 10 min) */
+  .next-event-card.urgency-far {
+    background: linear-gradient(135deg, rgba(255,60,80,0.10), rgba(255,60,80,0.03));
+    border: 1px solid rgba(255,60,80,0.35);
+  }
+  .next-event-card.urgency-far::before { background: linear-gradient(90deg, transparent, rgba(255,60,80,0.5), transparent); }
+  .urgency-far .event-timestamp { color: #ff7090; text-shadow: 0 0 15px rgba(255,60,80,0.5); }
+  .urgency-far .event-countdown  { color: #ff7090; }
 
   .event-icon { font-size: 36px; flex-shrink: 0; }
-
   .event-info { flex: 1; }
+  .event-timestamp { font-size: 30px; font-weight: 700; letter-spacing: 0.05em; line-height: 1; margin-bottom: 6px; }
+  .event-countdown { font-size: 14px; letter-spacing: 0.1em; }
+  .event-index { font-size: 12px; color: var(--muted); text-align: right; flex-shrink: 0; }
 
-  .event-timestamp {
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--gold2);
-    text-shadow: 0 0 15px rgba(240,165,0,0.5);
-    letter-spacing: 0.05em;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .event-countdown {
-    font-size: 14px;
-    color: var(--success);
-    letter-spacing: 0.1em;
-  }
-
-  .event-index {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  /* Upcoming list */
-  .upcoming-label {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .upcoming-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
+  .upcoming-label { font-size: 11px; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+  .upcoming-list { display: flex; flex-direction: column; gap: 8px; }
   .upcoming-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 16px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: all 0.2s;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 16px; background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s;
   }
+  .upcoming-item:hover { background: rgba(58,123,213,0.06); border-color: rgba(58,123,213,0.3); }
+  .upcoming-num { font-size: 11px; color: var(--muted); width: 20px; text-align: center; flex-shrink: 0; }
+  .upcoming-ts { font-size: 17px; font-weight: 600; color: var(--text); letter-spacing: 0.05em; flex: 1; }
+  .upcoming-wait { font-size: 13px; color: var(--accent2); text-align: right; }
 
-  .upcoming-item:hover {
-    background: rgba(58,123,213,0.06);
-    border-color: rgba(58,123,213,0.3);
-  }
+  footer { text-align: center; margin-top: 48px; font-size: 12px; color: var(--muted); letter-spacing: 0.15em; }
 
-  .upcoming-num {
-    font-size: 11px;
-    color: var(--muted);
-    width: 20px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-
-  .upcoming-ts {
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: 0.05em;
-    flex: 1;
-  }
-
-  .upcoming-wait {
-    font-size: 13px;
-    color: var(--accent2);
-    text-align: right;
-  }
-
-  /* Error */
-  .error-msg {
-    display: none;
-    background: rgba(255,77,109,0.1);
-    border: 1px solid rgba(255,77,109,0.3);
-    border-radius: 10px;
-    padding: 16px 20px;
-    color: var(--danger);
-    font-size: 14px;
-    letter-spacing: 0.05em;
-    margin-top: 16px;
-  }
-
-  /* API credit line */
-  footer {
-    text-align: center;
-    margin-top: 48px;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-  }
-
-  /* Tooltip for all timestamps */
-  .all-events-toggle {
-    text-align: center;
-    margin-top: 20px;
-  }
-
+  .all-events-toggle { text-align: center; margin-top: 20px; }
   .btn-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 8px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    font-family: 'Rajdhani', sans-serif; font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: all 0.2s;
   }
-
   .btn-toggle:hover { border-color: var(--accent); color: var(--accent2); }
 
   .all-events-list {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    max-height: 300px;
-    overflow-y: auto;
+    display: none; margin-top: 20px; padding: 20px;
+    background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+    border-radius: 12px; max-height: 300px; overflow-y: auto;
   }
-
   .all-events-list::-webkit-scrollbar { width: 4px; }
   .all-events-list::-webkit-scrollbar-track { background: transparent; }
   .all-events-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-  .all-events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 6px;
-  }
-
-  .all-event-item {
-    font-size: 13px;
-    color: var(--muted);
-    padding: 4px 8px;
-    border-radius: 4px;
-    text-align: center;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-
-  .all-event-item.past { color: rgba(74,96,128,0.4); text-decoration: line-through; }
-  .all-event-item.next { color: var(--gold2); font-weight: 700; background: rgba(240,165,0,0.08); }
+  .all-events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; }
+  .all-event-item { font-size: 13px; color: var(--muted); padding: 4px 8px; border-radius: 4px; text-align: center; letter-spacing: 0.05em; }
+  .all-event-item.past   { color: rgba(74,96,128,0.4); text-decoration: line-through; }
+  .all-event-item.next   { color: var(--gold2); font-weight: 700; background: rgba(240,165,0,0.08); }
   .all-event-item.future { color: var(--text); }
 </style>
 </head>
@@ -698,22 +376,20 @@
 
     <div class="processing-indicator" id="processing">
       <span class="spin-rune">✦</span>
-      <span id="processing-text">Running OCR on your screenshot…</span>
+      <span id="processing-text">Running OCR…</span>
     </div>
 
-    <button class="btn-analyze" id="analyzeBtn">
-      ✏️ Use Manual Time Entry
-    </button>
+    <button class="btn-analyze" id="analyzeBtn">✏️ Use Manual Time Entry</button>
   </div>
 
   <div id="results">
     <div class="result-header">
-      <div class="detected-age" id="detectedLabel">CURRENT SERVER AGE</div>
+      <div class="detected-age" id="detectedLabel">DETECTED SERVER AGE</div>
       <div class="detected-time" id="detectedTime">—</div>
     </div>
     <div class="next-event-section">
       <div class="next-label">⚡ Next World Event</div>
-      <div class="next-event-card">
+      <div class="next-event-card urgency-mid" id="nextEventCard">
         <div class="event-icon">🌍</div>
         <div class="event-info">
           <div class="event-timestamp" id="nextTimestamp">—</div>
@@ -734,12 +410,11 @@
     </div>
   </div>
 
-  <footer>Powered by Claude AI Vision · Event data for Roblox Bizarre Lineage</footer>
+  <footer>OCR powered by Tesseract.js · Event data for Roblox Bizarre Lineage</footer>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
 <script>
-// All world event timestamps in seconds
 const EVENT_TIMESTAMPS_RAW = [
   "0:20:00","0:42:01","1:04:02","1:26:03","1:48:04","2:10:05","2:32:06","2:54:07",
   "3:16:08","3:38:09","4:00:10","4:22:11","4:44:12","5:06:13","5:28:14","5:50:15",
@@ -752,89 +427,64 @@ const EVENT_TIMESTAMPS_RAW = [
   "23:49:04"
 ];
 
-function parseTimestamp(ts) {
-  const parts = ts.split(':').map(Number);
-  return parts[0] * 3600 + parts[1] * 60 + parts[2];
-}
+const EVENT_SECS = EVENT_TIMESTAMPS_RAW.map(ts => {
+  const [h,m,s] = ts.split(':').map(Number);
+  return h*3600+m*60+s;
+});
+const MAX_SERVER_SECS = EVENT_SECS[EVENT_SECS.length-1];
 
 function formatTimestamp(secs) {
-  const h = Math.floor(secs / 3600);
-  const m = Math.floor((secs % 3600) / 60);
-  const s = secs % 60;
+  const h=Math.floor(secs/3600), m=Math.floor((secs%3600)/60), s=secs%60;
   return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
-
-function formatDiff(diffSecs) {
-  if (diffSecs < 60) return `in ${diffSecs}s`;
-  if (diffSecs < 3600) {
-    const m = Math.floor(diffSecs / 60);
-    const s = diffSecs % 60;
-    return `in ${m}m ${s}s`;
-  }
-  const h = Math.floor(diffSecs / 3600);
-  const m = Math.floor((diffSecs % 3600) / 60);
-  const s = diffSecs % 60;
-  return `in ${h}h ${m}m ${s}s`;
+function formatDiff(d) {
+  if(d<60) return `in ${d}s`;
+  if(d<3600) return `in ${Math.floor(d/60)}m ${d%60}s`;
+  return `in ${Math.floor(d/3600)}h ${Math.floor((d%3600)/60)}m ${d%60}s`;
 }
-
-const EVENT_SECS = EVENT_TIMESTAMPS_RAW.map(parseTimestamp);
-
-const MAX_SERVER_SECS = EVENT_SECS[EVENT_SECS.length - 1];
-
-function findNextEvents(currentSecs, count = 5) {
-  // Find all future events
-  const future = [];
-  for (let i = 0; i < EVENT_SECS.length; i++) {
-    if (EVENT_SECS[i] > currentSecs) {
-      future.push({ index: i + 1, timestamp: EVENT_TIMESTAMPS_RAW[i], secs: EVENT_SECS[i] });
-    }
-    if (future.length >= count) break;
+function findNextEvents(cur, count=6) {
+  const out=[];
+  for(let i=0;i<EVENT_SECS.length;i++){
+    if(EVENT_SECS[i]>cur) out.push({index:i+1,timestamp:EVENT_TIMESTAMPS_RAW[i],secs:EVENT_SECS[i]});
+    if(out.length>=count) break;
   }
-  return future;
+  return out;
 }
+function urgencyClass(d) { return d<=180 ? 'urgency-soon' : d<=600 ? 'urgency-mid' : 'urgency-far'; }
 
-// ---- UI State ----
-let currentImageBase64 = null;
-let currentImageDataUrl = null;
+// ── UI REFS ──
+let currentImageBase64=null, currentImageDataUrl=null;
+const fileInput     = document.getElementById('fileInput');
+const dropZone      = document.getElementById('dropZone');
+const previewWrap   = document.getElementById('preview-wrap');
+const previewImg    = document.getElementById('preview-img');
+const clearBtn      = document.getElementById('clearBtn');
+const analyzeBtn    = document.getElementById('analyzeBtn');
+const processing    = document.getElementById('processing');
+const processingText= document.getElementById('processing-text');
+const results       = document.getElementById('results');
+const errorMsg      = document.getElementById('error-msg');
+const errorText     = document.getElementById('error-text');
 
-const fileInput = document.getElementById('fileInput');
-const dropZone = document.getElementById('dropZone');
-const previewWrap = document.getElementById('preview-wrap');
-const previewImg = document.getElementById('preview-img');
-const clearBtn = document.getElementById('clearBtn');
-const analyzeBtn = document.getElementById('analyzeBtn');
-const processing = document.getElementById('processing');
-const processingText = document.getElementById('processing-text');
-const results = document.getElementById('results');
-const errorMsg = document.getElementById('error-msg');
-const errorText = document.getElementById('error-text');
-
-// Drag & drop
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file) handleFile(file);
+// ── INPUT EVENTS ──
+dropZone.addEventListener('dragover', e=>{e.preventDefault();dropZone.classList.add('drag-over');});
+dropZone.addEventListener('dragleave', ()=>dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e=>{
+  e.preventDefault(); dropZone.classList.remove('drag-over');
+  if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
 });
+fileInput.addEventListener('change', ()=>{ if(fileInput.files[0]) handleFile(fileInput.files[0]); });
 
-fileInput.addEventListener('change', () => {
-  if (fileInput.files[0]) handleFile(fileInput.files[0]);
-});
-
-// ---- Ctrl+V Clipboard Paste ----
-document.addEventListener('paste', async (e) => {
+document.addEventListener('paste', e=>{
   const items = e.clipboardData?.items;
-  if (!items) return;
-  for (const item of items) {
-    if (item.type.startsWith('image/')) {
+  if(!items) return;
+  for(const item of items){
+    if(item.type.startsWith('image/')){
       e.preventDefault();
       const file = item.getAsFile();
-      if (file) {
-        // Flash the drop zone to give feedback
+      if(file){
         dropZone.classList.remove('paste-flash');
-        void dropZone.offsetWidth; // reflow
+        void dropZone.offsetWidth;
         dropZone.classList.add('paste-flash');
         handleFile(file);
       }
@@ -843,251 +493,230 @@ document.addEventListener('paste', async (e) => {
   }
 });
 
-clearBtn.addEventListener('click', () => {
-  currentImageBase64 = null;
-  currentImageDataUrl = null;
-  previewWrap.style.display = 'none';
-  previewImg.src = '';
-  fileInput.value = '';
-  hideError();
-  updateButtonLabel();
+clearBtn.addEventListener('click', ()=>{
+  currentImageBase64=currentImageDataUrl=null;
+  previewWrap.style.display='none';
+  previewImg.src=''; fileInput.value='';
+  hideError(); updateButtonLabel();
 });
 
-function handleFile(file) {
-  if (!file.type.startsWith('image/')) { showError('Please upload an image file.'); return; }
-  const reader = new FileReader();
-  reader.onload = e => {
-    currentImageDataUrl = e.target.result;
-    currentImageBase64 = currentImageDataUrl.split(',')[1];
-    previewImg.src = currentImageDataUrl;
-    previewWrap.style.display = 'block';
-    hideError();
-    updateButtonLabel();
-    // Auto-run analysis immediately
+function handleFile(file){
+  if(!file.type.startsWith('image/')){ showError('Please upload an image file.'); return; }
+  const reader=new FileReader();
+  reader.onload=e=>{
+    currentImageDataUrl=e.target.result;
+    currentImageBase64=currentImageDataUrl.split(',')[1];
+    previewImg.src=currentImageDataUrl;
+    previewWrap.style.display='block';
+    hideError(); updateButtonLabel();
     runAnalysis();
   };
   reader.readAsDataURL(file);
 }
 
-// Manual input
-const inputH = document.getElementById('inputH');
-const inputM = document.getElementById('inputM');
-const inputS = document.getElementById('inputS');
-
-function pad(v, len=2) { return String(v).padStart(len,'0'); }
-
-function updateButtonLabel() {
-  const hasImage = !!currentImageBase64;
-  analyzeBtn.textContent = hasImage ? '⚡ Re-analyze Image' : '✏️ Use Manual Time Entry';
+// ── MANUAL INPUT ──
+const inputH=document.getElementById('inputH');
+const inputM=document.getElementById('inputM');
+const inputS=document.getElementById('inputS');
+function pad(v){ return String(v).padStart(2,'0'); }
+function updateButtonLabel(){
+  analyzeBtn.textContent = currentImageBase64 ? '⚡ Re-analyze Image' : '✏️ Use Manual Time Entry';
 }
-
-[inputH, inputM, inputS].forEach(inp => inp.addEventListener('input', updateButtonLabel));
-
-[inputM, inputS].forEach(inp => {
-  inp.addEventListener('blur', () => { if (inp.value !== '') inp.value = pad(parseInt(inp.value)||0); });
-  inp.addEventListener('input', () => { if (inp.value.length >= 2) { const next = inp.nextElementSibling?.nextElementSibling; if (next && next.tagName==='INPUT') next.focus(); } });
-});
-
-function getManualSecs() {
-  const h = parseInt(inputH.value) || 0;
-  const m = parseInt(inputM.value) || 0;
-  const s = parseInt(inputS.value) || 0;
-  return h * 3600 + m * 60 + s;
-}
-
-function showError(msg) {
-  errorText.textContent = msg;
-  errorMsg.style.display = 'block';
-}
-function hideError() {
-  errorMsg.style.display = 'none';
-}
-
-// ---- OCR: extract timestamp from text ----
-// Looks for patterns like 1:23:45 or 12:34:56 — the server age timer
-function extractTimestampFromText(text) {
-  // Normalize common OCR mistakes: O->0, l->1, I->1, S->5, B->8
-  const cleaned = text
-    .replace(/[Oo]/g, '0')
-    .replace(/[lI]/g, '1')
-    .replace(/[S]/g, '5')
-    .replace(/[B]/g, '8');
-
-  // Match H:MM:SS or HH:MM:SS patterns
-  const matches = [...cleaned.matchAll(/\b(\d{1,2}):([0-5]\d):([0-5]\d)\b/g)];
-  if (!matches.length) return null;
-
-  // Prefer the one closest to a "server age" label if possible
-  // Otherwise return the most plausible one (not a clock time - so < 24h and likely not exactly 12:xx:xx)
-  // Return all and let caller pick
-  return matches.map(m => ({
-    hours: parseInt(m[1]),
-    minutes: parseInt(m[2]),
-    seconds: parseInt(m[3]),
-    raw: m[0]
-  }));
-}
-
-// ---- Tesseract OCR ----
-async function runOCR(imageDataUrl) {
-  processingText.textContent = 'Running OCR on screenshot…';
-  try {
-    // Use Tesseract with digits + colon whitelist for speed
-    const result = await Tesseract.recognize(imageDataUrl, 'eng', {
-      tessedit_char_whitelist: '0123456789:',
-      psm: 11, // sparse text - finds scattered text
-    });
-    const text = result.data.text;
-    const matches = extractTimestampFromText(text);
-    if (matches && matches.length > 0) {
-      // Pick the best match: largest value = longest-running server age (skip tiny times like 0:00:01)
-      // But actually we want ANY valid one; prefer non-zero
-      const best = matches.find(m => m.hours > 0 || m.minutes >= 10) || matches[0];
-      return best;
+[inputH,inputM,inputS].forEach(inp=>inp.addEventListener('input',updateButtonLabel));
+[inputM,inputS].forEach(inp=>{
+  inp.addEventListener('blur',()=>{ if(inp.value!=='') inp.value=pad(parseInt(inp.value)||0); });
+  inp.addEventListener('input',()=>{
+    if(inp.value.length>=2){
+      const nx=inp.nextElementSibling?.nextElementSibling;
+      if(nx?.tagName==='INPUT') nx.focus();
     }
-    return null;
-  } catch (err) {
-    console.warn('Tesseract OCR failed:', err);
-    return null;
-  }
-}
-
-// ---- Claude AI fallback ----
-async function runClaudeAI(base64) {
-  processingText.textContent = 'OCR inconclusive — asking Claude AI…';
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 200,
-      messages: [{
-        role: "user",
-        content: [
-          { type: "image", source: { type: "base64", media_type: "image/png", data: base64 } },
-          { type: "text", text: `Find the server age timer in this Roblox Bizarre Lineage screenshot. It shows how long the server has been running (H:MM:SS format).
-Return ONLY JSON, no other text:
-{"found":true,"hours":0,"minutes":0,"seconds":0,"raw":"0:00:00"}
-or {"found":false,"error":"reason"}` }
-        ]
-      }]
-    })
   });
-  const data = await response.json();
-  const text = data.content?.find(b => b.type === 'text')?.text || '';
-  const clean = text.replace(/```json|```/g, '').trim();
-  return JSON.parse(clean);
+});
+function getManualSecs(){
+  return (parseInt(inputH.value)||0)*3600+(parseInt(inputM.value)||0)*60+(parseInt(inputS.value)||0);
+}
+function showError(msg){ errorText.textContent=msg; errorMsg.style.display='block'; }
+function hideError()   { errorMsg.style.display='none'; }
+
+// ── OCR ──
+// Normalize common OCR character mis-reads then find all H:MM:SS patterns
+function extractTimestamp(text){
+  const t = text
+    .replace(/[Oo]/g,'0').replace(/[lI|]/g,'1')
+    .replace(/[Ss]/g,'5').replace(/[Bb]/g,'8')
+    .replace(/[Gg]/g,'6').replace(/[Zz]/g,'2');
+
+  // Accept colon or dash as separator (OCR sometimes reads ':' as '-')
+  const matches = [...t.matchAll(/\b(\d{1,2})[:\-]([0-5]\d)[:\-]([0-5]\d)\b/g)];
+  if(!matches.length) return null;
+
+  const candidates = matches.map(m=>({
+    hours:+m[1], minutes:+m[2], seconds:+m[3],
+    raw:`${m[1]}:${m[2]}:${m[3]}`
+  }));
+  // Pick the candidate with the most total seconds (most likely to be the server age, not a tiny counter)
+  candidates.sort((a,b)=>(b.hours*3600+b.minutes*60+b.seconds)-(a.hours*3600+a.minutes*60+a.seconds));
+  return candidates[0];
 }
 
-// ---- Main Analyze ----
-analyzeBtn.addEventListener('click', () => {
-  const hasManual = (inputH.value !== '' || inputM.value !== '' || inputS.value !== '');
-  if (hasManual && !currentImageBase64) {
-    const secs = getManualSecs();
-    showResults(formatTimestamp(secs), secs, 'manual');
+// Preprocess: draw image on canvas at higher contrast to help OCR
+function preprocessImage(dataUrl) {
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      const canvas=document.createElement('canvas');
+      // 2x upscale helps Tesseract with small text
+      canvas.width=img.width*2; canvas.height=img.height*2;
+      const ctx=canvas.getContext('2d');
+      ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      // Boost contrast
+      const id=ctx.getImageData(0,0,canvas.width,canvas.height);
+      const d=id.data;
+      for(let i=0;i<d.length;i+=4){
+        // Simple contrast stretch: push pixels towards white or black
+        const avg=(d[i]+d[i+1]+d[i+2])/3;
+        const v=avg>128?Math.min(255,avg+60):Math.max(0,avg-60);
+        d[i]=d[i+1]=d[i+2]=v;
+      }
+      ctx.putImageData(id,0,0);
+      resolve(canvas.toDataURL('image/png'));
+    };
+    img.src=dataUrl;
+  });
+}
+
+async function ocrPass(imageUrl, psm, whitelist){
+  const opts = { tessedit_pageseg_mode: psm };
+  if(whitelist) opts.tessedit_char_whitelist = whitelist;
+  const result = await Tesseract.recognize(imageUrl, 'eng', opts);
+  return result.data.text;
+}
+
+async function runOCR(imageDataUrl){
+  // Pass 1: preprocessed image, digits+colon whitelist, sparse text (PSM 11)
+  // Pass 2: preprocessed image, digits+colon whitelist, uniform block (PSM 6)
+  // Pass 3: preprocessed image, no whitelist, single line (PSM 7)
+  // Pass 4: original image, no whitelist, sparse (PSM 11) — fallback
+  let processed;
+  try { processed = await preprocessImage(imageDataUrl); }
+  catch(e){ processed = imageDataUrl; }
+
+  const passes = [
+    { img: processed,      psm: 11, whitelist: '0123456789:' },
+    { img: processed,      psm: 6,  whitelist: '0123456789:' },
+    { img: processed,      psm: 7,  whitelist: '0123456789:' },
+    { img: processed,      psm: 3,  whitelist: '0123456789:' },
+    { img: imageDataUrl,   psm: 11, whitelist: '0123456789:' },
+    { img: imageDataUrl,   psm: 6,  whitelist: null },
+    { img: imageDataUrl,   psm: 11, whitelist: null },
+  ];
+
+  for(let i=0; i<passes.length; i++){
+    const p=passes[i];
+    processingText.textContent=`Scanning… (pass ${i+1}/${passes.length})`;
+    try{
+      const text = await ocrPass(p.img, p.psm, p.whitelist);
+      const ts = extractTimestamp(text);
+      if(ts){
+        console.log(`OCR hit on pass ${i+1} (PSM ${p.psm}):`, ts.raw, '| raw:', text.trim());
+        return ts;
+      }
+    }catch(e){ console.warn(`OCR pass ${i+1} error:`, e); }
+  }
+  return null;
+}
+
+// ── ANALYZE ──
+analyzeBtn.addEventListener('click', ()=>{
+  const hasManual = inputH.value!==''||inputM.value!==''||inputS.value!=='';
+  if(hasManual && !currentImageBase64){
+    showResults(formatTimestamp(getManualSecs()), getManualSecs(), 'manual');
     return;
   }
   runAnalysis();
 });
 
-async function runAnalysis() {
+async function runAnalysis(){
   hideError();
-
-  if (!currentImageBase64) return;
-
-  analyzeBtn.disabled = true;
-  processing.style.display = 'block';
-  results.style.display = 'none';
-
-  try {
-    // 1. Try Tesseract OCR (fast, local)
-    const ocrResult = await runOCR(currentImageDataUrl);
-
-    if (ocrResult) {
-      const secs = ocrResult.hours * 3600 + ocrResult.minutes * 60 + ocrResult.seconds;
-      showResults(ocrResult.raw, secs, 'ocr');
+  if(!currentImageBase64) return;
+  analyzeBtn.disabled=true;
+  processing.style.display='block';
+  results.style.display='none';
+  try{
+    const ocr = await runOCR(currentImageDataUrl);
+    if(ocr){
+      showResults(ocr.raw, ocr.hours*3600+ocr.minutes*60+ocr.seconds, 'ocr');
       return;
     }
-
-    // 2. OCR couldn't find it — fall back to Claude AI
-    const aiResult = await runClaudeAI(currentImageBase64);
-    if (!aiResult.found) throw new Error(aiResult.error || 'No server age timer found. Try entering manually.');
-    const secs = (parseInt(aiResult.hours)||0)*3600 + (parseInt(aiResult.minutes)||0)*60 + (parseInt(aiResult.seconds)||0);
-    showResults(aiResult.raw || formatTimestamp(secs), secs, 'ai');
-
-  } catch (err) {
-    showError(err.message || 'Something went wrong. Try entering the time manually.');
-  } finally {
-    analyzeBtn.disabled = false;
-    processing.style.display = 'none';
+    // All OCR passes failed — tell the user to enter manually
+    showError("Couldn't read the timer from the screenshot. Please enter the server age manually below.");
+  }catch(err){
+    showError(err.message||'Something went wrong. Try entering the time manually.');
+  }finally{
+    analyzeBtn.disabled=false;
+    processing.style.display='none';
   }
 }
 
-function showResults(rawTime, currentSecs, method) {
-  const labelEl = document.getElementById('detectedLabel');
-  const badgeClass = method === 'ocr' ? 'ocr' : method === 'ai' ? 'ai' : 'manual';
-  const badgeLabel = method === 'ocr' ? '⚡ OCR' : method === 'ai' ? '🤖 AI' : '✏️ Manual';
-  labelEl.innerHTML = `DETECTED SERVER AGE <span class="method-badge ${badgeClass}">${badgeLabel}</span>`;
+// ── SHOW RESULTS ──
+function showResults(rawTime, currentSecs, method){
+  const badgeClass = method==='ocr'?'ocr':'manual';
+  const badgeLabel = method==='ocr'?'⚡ OCR':'✏️ Manual';
+  document.getElementById('detectedLabel').innerHTML =
+    `DETECTED SERVER AGE <span class="method-badge ${badgeClass}">${badgeLabel}</span>`;
   document.getElementById('detectedTime').textContent = rawTime;
 
-  if (currentSecs > MAX_SERVER_SECS) {
+  if(currentSecs>MAX_SERVER_SECS){
     showError(`Server age ${rawTime} is beyond the last known event (${EVENT_TIMESTAMPS_RAW[EVENT_TIMESTAMPS_RAW.length-1]}).`);
     return;
   }
-
   const nextEvents = findNextEvents(currentSecs, 6);
-
-  if (nextEvents.length === 0) {
-    showError('No upcoming events found. Server may be past all scheduled events.');
-    return;
-  }
+  if(!nextEvents.length){ showError('No upcoming events found.'); return; }
 
   const next = nextEvents[0];
   const diff = next.secs - currentSecs;
+
+  // Apply urgency color class
+  const card = document.getElementById('nextEventCard');
+  card.className = 'next-event-card ' + urgencyClass(diff);
 
   document.getElementById('nextTimestamp').textContent = next.timestamp;
   document.getElementById('nextCountdown').textContent = `${formatDiff(diff)} (${diff}s away)`;
   document.getElementById('nextIndex').textContent = `Event #${next.index}\nof ${EVENT_SECS.length}`;
 
   const upcomingList = document.getElementById('upcomingList');
-  upcomingList.innerHTML = '';
-  for (let i = 1; i < nextEvents.length; i++) {
-    const ev = nextEvents[i];
-    const d = ev.secs - currentSecs;
-    const item = document.createElement('div');
-    item.className = 'upcoming-item';
-    item.innerHTML = `
-      <span class="upcoming-num">#${ev.index}</span>
+  upcomingList.innerHTML='';
+  for(let i=1;i<nextEvents.length;i++){
+    const ev=nextEvents[i], d=ev.secs-currentSecs;
+    const item=document.createElement('div');
+    item.className='upcoming-item';
+    item.innerHTML=`<span class="upcoming-num">#${ev.index}</span>
       <span class="upcoming-ts">${ev.timestamp}</span>
-      <span class="upcoming-wait">${formatDiff(d)}</span>
-    `;
+      <span class="upcoming-wait">${formatDiff(d)}</span>`;
     upcomingList.appendChild(item);
   }
 
-  const grid = document.getElementById('allEventsGrid');
-  grid.innerHTML = '';
-  EVENT_TIMESTAMPS_RAW.forEach((ts, i) => {
-    const s = EVENT_SECS[i];
-    const div = document.createElement('div');
-    div.className = 'all-event-item';
-    if (s < currentSecs) div.classList.add('past');
-    else if (i === next.index - 1) div.classList.add('next');
-    else div.classList.add('future');
-    div.textContent = ts;
+  const grid=document.getElementById('allEventsGrid');
+  grid.innerHTML='';
+  EVENT_TIMESTAMPS_RAW.forEach((ts,i)=>{
+    const div=document.createElement('div');
+    div.className='all-event-item '+(EVENT_SECS[i]<currentSecs?'past':i===next.index-1?'next':'future');
+    div.textContent=ts;
     grid.appendChild(div);
   });
 
-  results.style.display = 'block';
-  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  results.style.display='block';
+  results.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// Toggle all events
-const toggleAll = document.getElementById('toggleAll');
-const allEventsList = document.getElementById('allEventsList');
-toggleAll.addEventListener('click', () => {
-  const visible = allEventsList.style.display === 'block';
-  allEventsList.style.display = visible ? 'none' : 'block';
-  toggleAll.textContent = visible ? 'Show All Event Timestamps' : 'Hide All Timestamps';
+// ── TOGGLE ALL ──
+const toggleAll=document.getElementById('toggleAll');
+const allEventsList=document.getElementById('allEventsList');
+toggleAll.addEventListener('click',()=>{
+  const open=allEventsList.style.display==='block';
+  allEventsList.style.display=open?'none':'block';
+  toggleAll.textContent=open?'Show All Event Timestamps':'Hide All Timestamps';
 });
 </script>
 </body>
