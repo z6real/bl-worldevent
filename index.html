@@ -669,7 +669,7 @@
       <input type="file" id="fileInput" accept="image/*">
       <div class="drop-icon">🖼️</div>
       <div class="drop-text">Drop screenshot here or click to browse</div>
-      <div class="drop-hint">OCR reads the server age instantly</div>
+      <div class="drop-hint">Analysis starts instantly on paste, drop, or select</div>
       <div class="paste-hint">⚡ <kbd>Ctrl</kbd>+<kbd>V</kbd> to paste from clipboard</div>
     </div>
 
@@ -702,7 +702,7 @@
     </div>
 
     <button class="btn-analyze" id="analyzeBtn">
-      ⚡ Find Next World Event
+      ✏️ Use Manual Time Entry
     </button>
   </div>
 
@@ -850,6 +850,7 @@ clearBtn.addEventListener('click', () => {
   previewImg.src = '';
   fileInput.value = '';
   hideError();
+  updateButtonLabel();
 });
 
 function handleFile(file) {
@@ -861,6 +862,9 @@ function handleFile(file) {
     previewImg.src = currentImageDataUrl;
     previewWrap.style.display = 'block';
     hideError();
+    updateButtonLabel();
+    // Auto-run analysis immediately
+    runAnalysis();
   };
   reader.readAsDataURL(file);
 }
@@ -871,6 +875,13 @@ const inputM = document.getElementById('inputM');
 const inputS = document.getElementById('inputS');
 
 function pad(v, len=2) { return String(v).padStart(len,'0'); }
+
+function updateButtonLabel() {
+  const hasImage = !!currentImageBase64;
+  analyzeBtn.textContent = hasImage ? '⚡ Re-analyze Image' : '✏️ Use Manual Time Entry';
+}
+
+[inputH, inputM, inputS].forEach(inp => inp.addEventListener('input', updateButtonLabel));
 
 [inputM, inputS].forEach(inp => {
   inp.addEventListener('blur', () => { if (inp.value !== '') inp.value = pad(parseInt(inp.value)||0); });
@@ -969,23 +980,21 @@ or {"found":false,"error":"reason"}` }
 }
 
 // ---- Main Analyze ----
-analyzeBtn.addEventListener('click', async () => {
-  hideError();
-
+analyzeBtn.addEventListener('click', () => {
   const hasManual = (inputH.value !== '' || inputM.value !== '' || inputS.value !== '');
-
-  if (!currentImageBase64 && !hasManual) {
-    showError('Upload a screenshot, paste one with Ctrl+V, or enter your server age manually.');
-    return;
-  }
-
   if (hasManual && !currentImageBase64) {
     const secs = getManualSecs();
     showResults(formatTimestamp(secs), secs, 'manual');
     return;
   }
+  runAnalysis();
+});
 
-  // Image path — try OCR first, then AI fallback
+async function runAnalysis() {
+  hideError();
+
+  if (!currentImageBase64) return;
+
   analyzeBtn.disabled = true;
   processing.style.display = 'block';
   results.style.display = 'none';
@@ -1012,7 +1021,7 @@ analyzeBtn.addEventListener('click', async () => {
     analyzeBtn.disabled = false;
     processing.style.display = 'none';
   }
-});
+}
 
 function showResults(rawTime, currentSecs, method) {
   const labelEl = document.getElementById('detectedLabel');
