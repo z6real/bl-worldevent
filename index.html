@@ -326,6 +326,23 @@
   .all-event-item.past   { color: rgba(74,96,128,0.4); text-decoration: line-through; }
   .all-event-item.next   { color: var(--gold2); font-weight: 700; background: rgba(240,165,0,0.08); }
   .all-event-item.future { color: var(--text); }
+
+  .watermark {
+    text-align: center;
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+  .watermark p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .watermark a {
+    color: var(--accent2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .watermark a:hover { color: var(--gold2); }
 </style>
 </head>
 <body>
@@ -337,6 +354,12 @@
   </header>
 
   <div class="divider"><div class="divider-gem"></div></div>
+
+  <div class="watermark">
+    <p><strong>Original</strong> timestamps idea by <a href="https://www.youtube.com/@fizzalasauras" target="_blank">@fizzalasauras</a> on YouTube</p>
+    <p>Website <strong>Idea</strong> &amp; <strong>Logic</strong> by <a href="https://guns.lol/z6gg" target="_blank">@z6gg</a> on Discord</p>
+    <p>Coded <strong>entirely</strong> by <a href="https://claude.ai/" target="_blank">claude.ai</a></p>
+  </div>
 
   <div class="upload-panel">
     <div class="section-label">⬆ Upload Server Age Screenshot</div>
