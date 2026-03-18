@@ -66,7 +66,7 @@
     padding: 40px 20px 80px;
   }
 
-  header { text-align: center; margin-bottom: 48px; }
+  header { text-align: center; margin-bottom: 20px; }
 
   .header-rune {
     font-size: 42px; margin-bottom: 8px;
@@ -91,7 +91,7 @@
 
   .divider {
     display: flex; align-items: center; gap: 16px;
-    margin: 0 auto 36px; max-width: 420px;
+    margin: 0 auto 16px; max-width: 420px;
   }
   .divider::before, .divider::after {
     content: ''; flex: 1; height: 1px;
@@ -336,7 +336,7 @@
 
   .watermark {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     line-height: 1.7;
   }
   .watermark p {
@@ -350,6 +350,14 @@
     transition: color 0.2s;
   }
   .watermark a:hover { color: var(--gold2); }
+  .watermark-date {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
 </style>
 </head>
 <body>
@@ -363,7 +371,7 @@
   <div class="divider"><div class="divider-gem"></div></div>
 
   <div class="watermark">
-    <p><strong>March 11, 2026</strong><p>
+    <p class="watermark-date">March 11, 2026</p>
     <p><strong>Original</strong> timestamps idea by <a href="https://www.youtube.com/@fizzalasauras" target="_blank">@fizzalasauras</a> on YouTube</p>
     <p>Website <strong>Idea</strong> &amp; <strong>Logic</strong> by <a href="https://guns.lol/z6gg" target="_blank">@z6gg</a> on Discord</p>
     <p>Coded <strong>entirely</strong> by <a href="https://claude.ai/" target="_blank">claude.ai</a></p>
@@ -422,7 +430,7 @@
         <div class="event-info">
           <div class="event-timestamp" id="nextTimestamp">—</div>
           <div class="event-countdown" id="nextCountdown">—</div>
-          <div class="timing-note">⚠ Timing may be a few seconds off ⚠</div>
+          <div class="timing-note">⚠ timing may be a few seconds off</div>
         </div>
         <div class="event-index" id="nextIndex">—</div>
       </div>
