@@ -842,8 +842,15 @@ async function initCounters() {
   document.getElementById('totalViews').textContent = '—';
   document.getElementById('liveCount').textContent = '—';
 
-  const TAB_ID = Math.random().toString(36).slice(2) + Date.now();
+  // Persistent ID — same browser always reuses the same presence row,
+  // so refreshing updates the row instead of adding a new one.
+  const VISITOR_KEY = 'bl_oracle_uid';
   const VISITED_KEY = 'bl_oracle_visited';
+  let VISITOR_ID = localStorage.getItem(VISITOR_KEY);
+  if (!VISITOR_ID) {
+    VISITOR_ID = Math.random().toString(36).slice(2) + Date.now();
+    localStorage.setItem(VISITOR_KEY, VISITOR_ID);
+  }
 
   // ── TOTAL VIEWS — only count if first visit from this browser ──
   try {
@@ -877,13 +884,13 @@ async function initCounters() {
     document.getElementById('totalViews').textContent = '—';
   }
 
-  // ── VIEWING NOW — heartbeat every 5s ──
+  // ── VIEWING NOW — stable row per VISITOR_ID ──
   async function upsertPresence() {
     try {
       await fetchWithTimeout(`${SUPABASE_URL}/rest/v1/presence`, {
         method: 'POST',
         headers: { ...SB, 'Prefer': 'resolution=merge-duplicates' },
-        body: JSON.stringify({ id: TAB_ID, last_seen: new Date().toISOString() })
+        body: JSON.stringify({ id: VISITOR_ID, last_seen: new Date().toISOString() })
       });
     } catch(e) { console.warn('Presence upsert error:', e); }
   }
@@ -919,7 +926,7 @@ async function initCounters() {
   }, 15000);
 
   window.addEventListener('beforeunload', () => {
-    fetch(`${SUPABASE_URL}/rest/v1/presence?id=eq.${TAB_ID}`, {
+    fetch(`${SUPABASE_URL}/rest/v1/presence?id=eq.${VISITOR_ID}`, {
       method: 'DELETE', headers: SB, keepalive: true
     }).catch(() => {});
   });
