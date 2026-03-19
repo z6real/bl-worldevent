@@ -417,7 +417,7 @@
   <div class="divider"><div class="divider-gem"></div></div>
 
   <div class="watermark">
-    <p class="watermark-date">PUBLISHED MARCH 11, 2026</p>
+    <p class="watermark-date">Published March 11, 2026</p>
     <p><strong>Original</strong> timestamps idea by <a href="https://www.youtube.com/@fizzalasauras" target="_blank">@fizzalasauras</a> on YouTube</p>
     <p>Website <strong>Idea</strong> &amp; <strong>Logic</strong> by <a href="https://guns.lol/z6gg" target="_blank">@z6gg</a> on Discord</p>
     <p>Coded <strong>entirely</strong> by <a href="https://claude.ai/" target="_blank">claude.ai</a></p>
@@ -829,50 +829,59 @@ toggleAll.addEventListener('click',()=>{
 });
 
 // ── STATS COUNTERS ──
-// Uses countapi.xyz — free, persistent, no signup needed
-const NAMESPACE = 'bizarrelineage-eventoracle';
+// Total views: api.counterapi.dev — free, no signup, persistent
+// Viewing now: localStorage heartbeat — counts tabs open in last 30s across same browser
+const COUNTER_KEY = 'bl-oracle-v1';
 
 async function initCounters() {
-  // 1. Bump total views and display it
+  // ── TOTAL VIEWS ──
   try {
-    const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/totalviews`);
+    // Hit the counter (increments by 1 and returns new value)
+    const res = await fetch(`https://api.counterapi.dev/v1/${COUNTER_KEY}/up`);
     const data = await res.json();
-    document.getElementById('totalViews').textContent = data.value.toLocaleString();
+    const count = data?.count ?? data?.value ?? '—';
+    document.getElementById('totalViews').textContent =
+      typeof count === 'number' ? count.toLocaleString() : count;
   } catch {
     document.getElementById('totalViews').textContent = '—';
   }
 
-  // 2. Increment "active" counter on load, decrement on unload
-  //    We use two keys: activeInc and activeDec; live = inc - dec
-  const SESSION_KEY = 'bl_oracle_session';
-  const alreadyCounted = sessionStorage.getItem(SESSION_KEY);
+  // ── VIEWING NOW ──
+  // Each tab writes a heartbeat timestamp every 20s.
+  // On load, count all heartbeats written in the last 35s = "live" tabs.
+  const HB_PREFIX = 'bl_hb_';
+  const TAB_ID = Math.random().toString(36).slice(2);
 
-  if (!alreadyCounted) {
-    sessionStorage.setItem(SESSION_KEY, '1');
-    try { await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/activeinc`); } catch {}
-    window.addEventListener('beforeunload', async () => {
-      try { await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/activedec`); } catch {}
-    });
+  function writeHeartbeat() {
+    try { localStorage.setItem(HB_PREFIX + TAB_ID, Date.now()); } catch {}
   }
-
-  // 3. Read live count (inc - dec)
-  async function refreshLive() {
+  function countLive() {
+    const now = Date.now();
+    let live = 0;
     try {
-      const [incRes, decRes] = await Promise.all([
-        fetch(`https://api.countapi.xyz/get/${NAMESPACE}/activeinc`),
-        fetch(`https://api.countapi.xyz/get/${NAMESPACE}/activedec`)
-      ]);
-      const inc = (await incRes.json()).value || 0;
-      const dec = (await decRes.json()).value || 0;
-      const live = Math.max(1, inc - dec);
-      document.getElementById('liveCount').textContent = live.toLocaleString();
-    } catch {
-      document.getElementById('liveCount').textContent = '—';
-    }
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(HB_PREFIX)) {
+          const ts = parseInt(localStorage.getItem(k));
+          if (now - ts < 35000) live++;
+          else localStorage.removeItem(k); // clean up stale
+        }
+      }
+    } catch {}
+    return Math.max(1, live);
   }
 
-  refreshLive();
-  setInterval(refreshLive, 30000); // refresh every 30s
+  writeHeartbeat();
+  document.getElementById('liveCount').textContent = countLive();
+
+  setInterval(() => {
+    writeHeartbeat();
+    document.getElementById('liveCount').textContent = countLive();
+  }, 20000);
+
+  window.addEventListener('beforeunload', () => {
+    try { localStorage.removeItem(HB_PREFIX + TAB_ID); } catch {}
+  });
 }
 
 initCounters();
