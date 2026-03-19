@@ -391,15 +391,7 @@
     flex-shrink: 0;
   }
   .stat-pill.views .stat-dot { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
-  .stat-pill.live .stat-dot {
-    background: var(--success);
-    box-shadow: 0 0 6px var(--success);
-    animation: blink-dot 1.4s ease-in-out infinite;
-  }
-  @keyframes blink-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.25; }
-  }
+  .stat-pill.live .stat-dot { background: var(--success); box-shadow: 0 0 6px var(--success); }
   .stat-pill .stat-value {
     color: var(--text);
     font-weight: 700;
@@ -496,11 +488,11 @@
   <div class="stats-bar">
     <div class="stat-pill views">
       <span class="stat-dot"></span>
-      Total Views: <span class="stat-value" id="totalViews">…</span>
+      Total Views: <span class="stat-value" id="totalViews">—</span>
     </div>
     <div class="stat-pill live">
       <span class="stat-dot"></span>
-      Viewing Now: <span class="stat-value" id="liveCount">…</span>
+      Viewing Now: <span class="stat-value" id="liveCount">—</span>
     </div>
   </div>
 
@@ -839,7 +831,6 @@ const SB = {
   'Content-Type': 'application/json'
 };
 
-// Fetch with a timeout so it never hangs
 function fetchWithTimeout(url, opts, ms=6000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ms);
@@ -848,32 +839,45 @@ function fetchWithTimeout(url, opts, ms=6000) {
 }
 
 async function initCounters() {
-  // Show fallback immediately — replaced if fetch succeeds
   document.getElementById('totalViews').textContent = '—';
-  document.getElementById('liveCount').textContent = '1';
+  document.getElementById('liveCount').textContent = '—';
 
   const TAB_ID = Math.random().toString(36).slice(2) + Date.now();
+  const VISITED_KEY = 'bl_oracle_visited';
 
-  // ── TOTAL VIEWS ──
+  // ── TOTAL VIEWS — only count if first visit from this browser ──
   try {
-    const getRes = await fetchWithTimeout(
-      `${SUPABASE_URL}/rest/v1/page_views?id=eq.event-oracle&select=count`, { headers: SB }
-    );
-    const getData = await getRes.json();
-    const current = getData[0]?.count ?? 0;
-    const newCount = current + 1;
-    await fetchWithTimeout(`${SUPABASE_URL}/rest/v1/page_views?id=eq.event-oracle`, {
-      method: 'PATCH',
-      headers: { ...SB, 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ count: newCount })
-    });
-    document.getElementById('totalViews').textContent = newCount.toLocaleString();
+    const alreadyVisited = localStorage.getItem(VISITED_KEY);
+    if (!alreadyVisited) {
+      // New visitor — increment
+      const getRes = await fetchWithTimeout(
+        `${SUPABASE_URL}/rest/v1/page_views?id=eq.event-oracle&select=count`, { headers: SB }
+      );
+      const getData = await getRes.json();
+      const current = getData[0]?.count ?? 0;
+      const newCount = current + 1;
+      await fetchWithTimeout(`${SUPABASE_URL}/rest/v1/page_views?id=eq.event-oracle`, {
+        method: 'PATCH',
+        headers: { ...SB, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ count: newCount })
+      });
+      localStorage.setItem(VISITED_KEY, '1');
+      document.getElementById('totalViews').textContent = newCount.toLocaleString();
+    } else {
+      // Returning visitor — just read current count
+      const getRes = await fetchWithTimeout(
+        `${SUPABASE_URL}/rest/v1/page_views?id=eq.event-oracle&select=count`, { headers: SB }
+      );
+      const getData = await getRes.json();
+      const current = getData[0]?.count ?? 0;
+      document.getElementById('totalViews').textContent = current.toLocaleString();
+    }
   } catch(e) {
     console.warn('Views counter error:', e);
     document.getElementById('totalViews').textContent = '—';
   }
 
-  // ── VIEWING NOW ──
+  // ── VIEWING NOW — heartbeat every 5s ──
   async function upsertPresence() {
     try {
       await fetchWithTimeout(`${SUPABASE_URL}/rest/v1/presence`, {
@@ -908,6 +912,7 @@ async function initCounters() {
   await countPresence();
   cleanPresence();
 
+  // Heartbeat every 15 seconds
   setInterval(async () => {
     await upsertPresence();
     await countPresence();
