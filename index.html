@@ -417,7 +417,7 @@
   <div class="divider"><div class="divider-gem"></div></div>
 
   <div class="watermark">
-    <p class="watermark-date">Published March 11, 2026</p>
+    <p class="watermark-date">March 11, 2026</p>
     <p><strong>Original</strong> timestamps idea by <a href="https://www.youtube.com/@fizzalasauras" target="_blank">@fizzalasauras</a> on YouTube</p>
     <p>Website <strong>Idea</strong> &amp; <strong>Logic</strong> by <a href="https://guns.lol/z6gg" target="_blank">@z6gg</a> on Discord</p>
     <p>Coded <strong>entirely</strong> by <a href="https://claude.ai/" target="_blank">claude.ai</a></p>
@@ -503,6 +503,8 @@
       Viewing Now: <span class="stat-value" id="liveCount">…</span>
     </div>
   </div>
+
+  <footer>OCR powered by Tesseract.js · Event data for Roblox Bizarre Lineage</footer>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
@@ -828,23 +830,98 @@ toggleAll.addEventListener('click',()=>{
   toggleAll.textContent=open?'Show Nearby Event Timestamps':'Hide Timestamps';
 });
 
-// ── STATS COUNTERS ──
-// Total views: api.counterapi.dev — free, no signup, persistent
-// Viewing now: localStorage heartbeat — counts tabs open in last 30s across same browser
-const COUNTER_KEY = 'bl-oracle-v1';
+// ── STATS COUNTERS (Supabase) ──
+const SUPABASE_URL = 'https://cferafshorwzhmcbvged.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_ICnCykpB8ehN0mYhCU3Sxg_yfrAuVXN';
+const headers = {
+  'apikey': SUPABASE_KEY,
+  'Authorization': `Bearer ${SUPABASE_KEY}`,
+  'Content-Type': 'application/json',
+  'Prefer': 'return=representation'
+};
 
 async function initCounters() {
-  // ── TOTAL VIEWS ──
+  const TAB_ID = Math.random().toString(36).slice(2) + Date.now();
+
+  // ── TOTAL VIEWS: increment by 1 and display ──
   try {
-    // Hit the counter (increments by 1 and returns new value)
-    const res = await fetch(`https://api.counterapi.dev/v1/${COUNTER_KEY}/up`);
-    const data = await res.json();
-    const count = data?.count ?? data?.value ?? '—';
-    document.getElementById('totalViews').textContent =
-      typeof count === 'number' ? count.toLocaleString() : count;
+    // Read current count
+    const getRes = await fetch(`${SUPABASE_URL}/rest/v1/page_views?id=eq.event-oracle&select=count`, { headers });
+    const getData = await getRes.json();
+    const current = getData[0]?.count ?? 0;
+    const newCount = current + 1;
+
+    // Write new count
+    await fetch(`${SUPABASE_URL}/rest/v1/page_views?id=eq.event-oracle`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ count: newCount })
+    });
+
+    document.getElementById('totalViews').textContent = newCount.toLocaleString();
   } catch {
     document.getElementById('totalViews').textContent = '—';
   }
+
+  // ── VIEWING NOW: heartbeat presence ──
+  async function upsertPresence() {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/presence`, {
+        method: 'POST',
+        headers: { ...headers, 'Prefer': 'resolution=merge-duplicates' },
+        body: JSON.stringify({ id: TAB_ID, last_seen: new Date().toISOString() })
+      });
+    } catch {}
+  }
+
+  async function countPresence() {
+    try {
+      // Count rows seen in last 35 seconds
+      const cutoff = new Date(Date.now() - 35000).toISOString();
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/presence?last_seen=gte.${cutoff}&select=id`,
+        { headers }
+      );
+      const data = await res.json();
+      document.getElementById('liveCount').textContent = Math.max(1, data.length).toLocaleString();
+    } catch {
+      document.getElementById('liveCount').textContent = '—';
+    }
+  }
+
+  async function cleanOldPresence() {
+    try {
+      const cutoff = new Date(Date.now() - 60000).toISOString();
+      await fetch(`${SUPABASE_URL}/rest/v1/presence?last_seen=lt.${cutoff}`, {
+        method: 'DELETE', headers
+      });
+    } catch {}
+  }
+
+  // Init
+  await upsertPresence();
+  await countPresence();
+  cleanOldPresence();
+
+  // Heartbeat every 15s
+  setInterval(async () => {
+    await upsertPresence();
+    await countPresence();
+  }, 15000);
+
+  // Remove self on tab close
+  window.addEventListener('beforeunload', () => {
+    navigator.sendBeacon(
+      `${SUPABASE_URL}/rest/v1/presence?id=eq.${TAB_ID}`,
+      // sendBeacon can't do DELETE, so we just let cleanup handle it
+    );
+    fetch(`${SUPABASE_URL}/rest/v1/presence?id=eq.${TAB_ID}`, {
+      method: 'DELETE', headers, keepalive: true
+    }).catch(() => {});
+  });
+}
+
+initCounters();
 
   // ── VIEWING NOW ──
   // Each tab writes a heartbeat timestamp every 20s.
