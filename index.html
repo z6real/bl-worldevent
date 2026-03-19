@@ -358,6 +358,51 @@
     color: var(--gold);
     margin-bottom: 6px;
   }
+
+  .stats-bar {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    z-index: 100;
+  }
+  .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(13,20,40,0.85);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .stat-pill .stat-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .stat-pill.views .stat-dot { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
+  .stat-pill.live .stat-dot {
+    background: var(--success);
+    box-shadow: 0 0 6px var(--success);
+    animation: blink-dot 1.4s ease-in-out infinite;
+  }
+  @keyframes blink-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+  .stat-pill .stat-value {
+    color: var(--text);
+    font-weight: 700;
+  }
 </style>
 </head>
 <body>
@@ -371,7 +416,7 @@
   <div class="divider"><div class="divider-gem"></div></div>
 
   <div class="watermark">
-    <p class="watermark-date">March 11, 2026</p>
+    <p class="watermark-date">PUBLISHED March 11, 2026</p>
     <p><strong>Original</strong> timestamps idea by <a href="https://www.youtube.com/@fizzalasauras" target="_blank">@fizzalasauras</a> on YouTube</p>
     <p>Website <strong>Idea</strong> &amp; <strong>Logic</strong> by <a href="https://guns.lol/z6gg" target="_blank">@z6gg</a> on Discord</p>
     <p>Coded <strong>entirely</strong> by <a href="https://claude.ai/" target="_blank">claude.ai</a></p>
@@ -447,7 +492,16 @@
     </div>
   </div>
 
-  <footer>OCR powered by Tesseract.js · Event data for Roblox Bizarre Lineage</footer>
+  <div class="stats-bar">
+    <div class="stat-pill views">
+      <span class="stat-dot"></span>
+      Total Views: <span class="stat-value" id="totalViews">…</span>
+    </div>
+    <div class="stat-pill live">
+      <span class="stat-dot"></span>
+      Viewing Now: <span class="stat-value" id="liveCount">…</span>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
@@ -772,6 +826,55 @@ toggleAll.addEventListener('click',()=>{
   allEventsList.style.display=open?'none':'block';
   toggleAll.textContent=open?'Show Nearby Event Timestamps':'Hide Timestamps';
 });
+
+// ── STATS COUNTERS ──
+// Uses countapi.xyz — free, persistent, no signup needed
+const NAMESPACE = 'bizarrelineage-eventoracle';
+
+async function initCounters() {
+  // 1. Bump total views and display it
+  try {
+    const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/totalviews`);
+    const data = await res.json();
+    document.getElementById('totalViews').textContent = data.value.toLocaleString();
+  } catch {
+    document.getElementById('totalViews').textContent = '—';
+  }
+
+  // 2. Increment "active" counter on load, decrement on unload
+  //    We use two keys: activeInc and activeDec; live = inc - dec
+  const SESSION_KEY = 'bl_oracle_session';
+  const alreadyCounted = sessionStorage.getItem(SESSION_KEY);
+
+  if (!alreadyCounted) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    try { await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/activeinc`); } catch {}
+    window.addEventListener('beforeunload', async () => {
+      try { await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/activedec`); } catch {}
+    });
+  }
+
+  // 3. Read live count (inc - dec)
+  async function refreshLive() {
+    try {
+      const [incRes, decRes] = await Promise.all([
+        fetch(`https://api.countapi.xyz/get/${NAMESPACE}/activeinc`),
+        fetch(`https://api.countapi.xyz/get/${NAMESPACE}/activedec`)
+      ]);
+      const inc = (await incRes.json()).value || 0;
+      const dec = (await decRes.json()).value || 0;
+      const live = Math.max(1, inc - dec);
+      document.getElementById('liveCount').textContent = live.toLocaleString();
+    } catch {
+      document.getElementById('liveCount').textContent = '—';
+    }
+  }
+
+  refreshLive();
+  setInterval(refreshLive, 30000); // refresh every 30s
+}
+
+initCounters();
 </script>
 </body>
 </html>
