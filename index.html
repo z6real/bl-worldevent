@@ -921,46 +921,6 @@ async function initCounters() {
 }
 
 initCounters();
-
-  // ── VIEWING NOW ──
-  // Each tab writes a heartbeat timestamp every 20s.
-  // On load, count all heartbeats written in the last 35s = "live" tabs.
-  const HB_PREFIX = 'bl_hb_';
-  const TAB_ID = Math.random().toString(36).slice(2);
-
-  function writeHeartbeat() {
-    try { localStorage.setItem(HB_PREFIX + TAB_ID, Date.now()); } catch {}
-  }
-  function countLive() {
-    const now = Date.now();
-    let live = 0;
-    try {
-      for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith(HB_PREFIX)) {
-          const ts = parseInt(localStorage.getItem(k));
-          if (now - ts < 35000) live++;
-          else localStorage.removeItem(k); // clean up stale
-        }
-      }
-    } catch {}
-    return Math.max(1, live);
-  }
-
-  writeHeartbeat();
-  document.getElementById('liveCount').textContent = countLive();
-
-  setInterval(() => {
-    writeHeartbeat();
-    document.getElementById('liveCount').textContent = countLive();
-  }, 20000);
-
-  window.addEventListener('beforeunload', () => {
-    try { localStorage.removeItem(HB_PREFIX + TAB_ID); } catch {}
-  });
-}
-
-initCounters();
 </script>
 </body>
 </html>
