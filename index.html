@@ -501,7 +501,7 @@
       <div class="drop-icon">🖼️</div>
       <div class="drop-text">Drop screenshot here or click to browse</div>
       <div class="drop-hint">Analysis starts instantly on paste, drop, or select</div>
-      <div class="paste-hint">⚡ <kbd>Ctrl</kbd>+<kbd>V</kbd> to paste from clipboard</div>
+      <div class="paste-hint">📋 <kbd>Ctrl</kbd>+<kbd>V</kbd> to paste from clipboard</div>
     </div>
 
     <div id="preview-wrap">
@@ -713,7 +713,7 @@ const inputM=document.getElementById('inputM');
 const inputS=document.getElementById('inputS');
 function pad(v){ return String(v).padStart(2,'0'); }
 function updateButtonLabel(){
-  analyzeBtn.textContent = currentImageBase64 ? '⚡ Re-analyze Image' : '✏️ Use Manual Time Entry';
+  analyzeBtn.textContent = currentImageBase64 ? '⚡ Re-analyze Image ⚡' : '✏️ Use Manual Time Entry ✏️';
 }
 [inputH,inputM,inputS].forEach(inp=>inp.addEventListener('input',updateButtonLabel));
 [inputM,inputS].forEach(inp=>{
